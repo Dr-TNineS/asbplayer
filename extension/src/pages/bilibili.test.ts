@@ -38,6 +38,32 @@ describe('extractBilibiliTracks', () => {
         ]);
     });
 
+    it('extracts international ASS tracks from the current direct subtitle list', () => {
+        const tracks = extractBilibiliTracks(
+            {
+                data: {
+                    subtitles: [
+                        {
+                            lang: 'English',
+                            lang_key: 'en',
+                            url: 'https://s.bstarstatic.com/ogv/subtitle/english.ass?auth_key=test',
+                        },
+                    ],
+                },
+            },
+            'https://www.bilibili.tv/en/play/1063218/11511707'
+        );
+
+        expect(tracks).toEqual([
+            {
+                label: 'English',
+                language: 'en',
+                url: 'https://s.bstarstatic.com/ogv/subtitle/english.ass?auth_key=test',
+                extension: 'ass',
+            },
+        ]);
+    });
+
     it('extracts mainland manual and AI subtitle tracks as Bilibili JSON', () => {
         const tracks = extractBilibiliTracks(
             {
